@@ -443,6 +443,7 @@ class LinuxCollector(Collector):
                 record['mem_total'] = int(meminfo['MemTotal'].split()[0]) # kB
                 record['mem_free'] = int(meminfo['MemFree'].split()[0]) # kB
                 record['mem_used'] = record['mem_total'] - record['mem_free']
+                record['mem_free'] = int(meminfo['MemAvailable'].split()[0]) # kB # hack to get MemAvailable
                 record['swap_total'] = int(meminfo['SwapTotal'].split()[0]) # kB
                 record['swap_free'] = int(meminfo['SwapFree'].split()[0]) # kB
                 record['swap_used'] = record['swap_total'] - record['swap_free']
