@@ -503,7 +503,7 @@ class LinuxCollector(Collector):
             logdbg("read failed for %s: %s" % (fn, e))
 
         # read cpu temperature
-        tdir = '/sys/class/hwmon/hwmon0/device'
+        tdir = '/sys/class/hwmon/hwmon0/device' + 'rmb'
         # rpi keeps cpu temperature in a different location
         tfile = '/sys/class/thermal/thermal_zone0/temp'
         if os.path.exists(tdir):
