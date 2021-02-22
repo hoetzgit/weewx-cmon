@@ -325,7 +325,7 @@ class Collector(object):
         try:
             cmd = '/sbin/apcaccess'
             p = Popen(cmd, shell=True, stdout=PIPE)
-            o = p.communicate()[0]
+            o = p.communicate()[0].decode('utf8')
             for line in o.split('\n'):
                 if line.startswith('ITEMP'):
                     m = Collector._DIGITS.search(line)
@@ -362,18 +362,18 @@ class Collector(object):
         try:
             cmd = '%s measure_temp' % Collector._RPI_VCGENCMD
             p = Popen(cmd, shell=True, stdout=PIPE)
-            o = p.communicate()[0]
+            o = p.communicate()[0].decode('utf8')
             record['core_temp'] = float(o.replace("'C\n", '').partition('=')[2])
             cmd = '%s measure_volts' % Collector._RPI_VCGENCMD
             p = Popen(cmd, shell=True, stdout=PIPE)
-            o = p.communicate()[0]
+            o = p.communicate()[0].decode('utf8')
             for line in o.split('\n'):
                 m = Collector._RPI_VOLT.search(line)
                 if m:
                     record[m.group(1) + '_volt'] = float(m.group(2))
             cmd = '%s measure_volts' % Collector._RPI_VCGENCMD
             p = Popen(cmd, shell=True, stdout=PIPE)
-            o = p.communicate()[0]
+            o = p.communicate()[0].decode('utf8')
             for line in o.split('\n'):
                 m = Collector._RPI_MEM.search(line)
                 if m:
