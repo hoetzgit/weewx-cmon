@@ -125,6 +125,7 @@ from builtins import input
 
 import weewx
 import weeutil.weeutil
+from weeutil.weeutil import to_bool
 from weewx.drivers import AbstractDevice
 from weewx.engine import StdService
 
@@ -684,6 +685,12 @@ class ComputerMonitor(StdService):
         loginf("service version is %s" % DRIVER_VERSION)
 
         d = config_dict.get('ComputerMonitor', {})
+
+	enable = to_bool(d.get('enable', True))
+        if not enable:
+            loginf("cmon is not enabled, exiting")
+            return
+
         self.max_age = weeutil.weeutil.to_int(d.get('max_age', 2592000))
         self.ignored_mounts = d.get('ignored_mounts', IGNORED_MOUNTS)
         self.hardware = d.get('hardware', [None])
