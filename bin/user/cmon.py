@@ -686,7 +686,7 @@ class ComputerMonitor(StdService):
 
         d = config_dict.get('ComputerMonitor', {})
 
-	enable = to_bool(d.get('enable', True))
+        enable = to_bool(d.get('enable', True))
         if not enable:
             loginf("cmon is not enabled, exiting")
             return
