@@ -364,7 +364,9 @@ class Collector(object):
             cmd = '%s measure_temp' % Collector._RPI_VCGENCMD
             p = Popen(cmd, shell=True, stdout=PIPE)
             o = p.communicate()[0].decode('utf8')
-            record['core_temp'] = float(o.replace("'C\n", '').partition('=')[2])
+            core_temp = o.replace("'C\n", '').partition('=')[2]
+            if core_temp:
+                record['core_temp'] = float(core_temp)
             cmd = '%s measure_volts' % Collector._RPI_VCGENCMD
             p = Popen(cmd, shell=True, stdout=PIPE)
             o = p.communicate()[0].decode('utf8')
