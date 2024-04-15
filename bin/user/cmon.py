@@ -550,13 +550,16 @@ class LinuxCollector(Collector):
             label = disk.replace('/', '_')
             if label == '_':
                 label = '_root'
-            st = os.statvfs(disk)
-            free = int((st.f_bavail * st.f_frsize) / 1024) # kB
-            total = int((st.f_blocks * st.f_frsize) / 1024) # kB
-            used = int(((st.f_blocks - st.f_bfree) * st.f_frsize) / 1024) # kB
-            record['disk' + label + '_free'] = free
-            record['disk' + label + '_total'] = total
-            record['disk' + label + '_used'] = used
+            try:
+                st = os.statvfs(disk)
+                free = int((st.f_bavail * st.f_frsize) / 1024) # kB
+                total = int((st.f_blocks * st.f_frsize) / 1024) # kB
+                used = int(((st.f_blocks - st.f_bfree) * st.f_frsize) / 1024) # kB
+                record['disk' + label + '_free'] = free
+                record['disk' + label + '_total'] = total
+                record['disk' + label + '_used'] = used
+            except BlockingIOError as exception:
+                logerr(exception)
 
         return record
 
