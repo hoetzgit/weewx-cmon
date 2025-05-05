@@ -560,7 +560,7 @@ class LinuxCollector(Collector):
                 record['disk' + label + '_free'] = free
                 record['disk' + label + '_total'] = total
                 record['disk' + label + '_used'] = used
-            except BlockingIOError as exception:
+            except (BlockingIOError, PermissionError) as exception:
                 logerr(exception)
 
         return record
